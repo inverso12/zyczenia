@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Display</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Kontener na fajerwerki */
+        #fireworks-container {
+            position: fixed; /* Ustawienie względem widocznego ekranu */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh; /* Pełna wysokość widoku */
+            overflow: hidden; /* Ukrycie elementów poza kontenerem */
+            pointer-events: none; /* Umożliwienie interakcji z innymi elementami */
+            z-index: 10; /* Wyższy priorytet warstwy */
+        }
+
+        /* Gwiazdki */
+        .firework-text {
+            position: absolute;
+            font-size: 24px;
+            color: rgb(189, 96, 84);
+            animation: fireworks 1.5s ease-out infinite;
+            opacity: 0;
+        }
+
+        /* Serduszka */
+        .heart-firework {
+            position: absolute;
+            font-size: 32px;
+            color: #ff69b4;
+            animation: heartFirework 2s ease-out infinite;
+            opacity: 0;
+        }
+
+        /* Animacja gwiazdek */
+        @keyframes fireworks {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Animacja serduszek */
+        @keyframes heartFirework {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Dostosowanie dla urządzeń mobilnych */
+        @media (max-width: 768px) {
+            #fireworks-container {
+                height: 100vh; /* Pełna wysokość na urządzeniach mobilnych */
+            }
+
+            .firework-text, .heart-firework {
+                font-size: 18px; /* Zmniejszenie rozmiaru na mniejszych ekranach */
+            }
+
+            @keyframes fireworks {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(2.5) rotate(360deg); /* Zmniejszenie skali na mobilnych */
+                    opacity: 0;
+                }
+            }
+
+            @keyframes heartFirework {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(3) rotate(360deg); /* Zmniejszenie skali na mobilnych */
+                    opacity: 0;
+                }
+            }
+        }
+
+
+        /* Dostosowanie dla urządzeń mobilnych */
+        @media (max-width: 768px) {
+            #fireworks-container {
+                height: 80vh; /* Zmniejszenie wysokości na mobilnych */
+            }
+
+            .firework-text, .heart-firework {
+                font-size: 18px; /* Mniejszy rozmiar fajerwerków */
+            }
+
+            @keyframes fireworks {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(2.5) rotate(360deg); /* Zmniejszona skala */
+                    opacity: 0;
+                }
+            }
+
+            @keyframes heartFirework {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(3) rotate(360deg); /* Zmniejszona skala */
+                    opacity: 0;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="code-container" class="code-container">
+        {% for filename, content in files_content.items() %}
+            <h3>{{ filename }}</h3>
+            <pre class="code">{{ content }}</pre>
+        {% endfor %}
+    </div>
+
+    <!-- Obrazek z animacją -->
+    <div id="image-container" class="hidden">
+        <img src="{{ url_for('static', filename='images/obrazek.png') }}" alt="Congratulations Image" class="glow-image">
+    </div>
+
+    <div id="wishes" class="hidden">
+        <p class="wish-line" style="animation-delay: 0s;">Niech każdy dzień przynosi Wam powody do uśmiechu</p>
+        <p class="wish-line" style="animation-delay: 1s;">i będzie nową, wspaniałą przygodą,</p>
+        <p class="wish-line" style="animation-delay: 2s;">pełną szacunku, zrozumienia i miłości.</p>
+        <p class="wish-line" style="animation-delay: 3s;">Nasze gratulacje!</p>
+    </div>
+
+    <div id="extra-logo-container" class="hidden">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="fade-in-image">
+    </div>
+
+    <!-- Kontener na fajerwerki -->
+    <div id="fireworks-container" class="hidden">
+        <!-- Gwiazdki -->
+        <span class="firework-text" style="top: 10%; left: 50%; animation-delay: 0s;">★</span>
+        <span class="firework-text" style="top: 30%; left: 70%; animation-delay: 0.5s;">★</span>
+        <span class="firework-text" style="top: 50%; left: 30%; animation-delay: 1s;">★</span>
+        <span class="firework-text" style="top: 70%; left: 50%; animation-delay: 1.5s;">★</span>
+
+        <!-- Serduszka -->
+        <span class="heart-firework" style="top: 20%; left: 40%; animation-delay: 0.3s;">❤</span>
+        <span class="heart-firework" style="top: 50%; left: 60%; animation-delay: 0.8s;">❤</span>
+        <span class="heart-firework" style="top: 70%; left: 30%; animation-delay: 1.2s;">❤</span>
+        <span class="heart-firework" style="top: 40%; left: 80%; animation-delay: 1.6s;">❤</span>
+    </div>
+
+
+    <script>
+        // Typowanie kodu
+        const codeContainer = document.getElementById('code-container');
+        const codeElements = document.querySelectorAll('.code');
+        let delay = 0;
+
+        codeElements.forEach((element) => {
+            const codeText = element.textContent; // Pobierz tekst za pomocą textContent
+            element.textContent = ''; // Wyzeruj tekst przed rozpoczęciem animacji
+            let index = 0;
+
+            function typeCode() {
+                if (index < codeText.length) {
+                    element.textContent += codeText.substring(index, index + 5); // Dodaj fragment tekstu
+                    index += 5;
+                    setTimeout(typeCode, 1); // Szybkość animacji
+                } else if (element === codeElements[codeElements.length - 1]) {
+                    setTimeout(() => {
+                        codeContainer.classList.add('fade-out'); // Dodaj animację zanikania
+                        setTimeout(showImageAndWishes, 1000); // Wywołaj dalszą funkcję po zakończeniu
+                    }, 500);
+                }
+            }
+            setTimeout(typeCode, delay); // Zaczekaj przed rozpoczęciem animacji dla kolejnego elementu
+            delay += codeText.length * 1 + 500; // Czas opóźnienia zależny od długości tekstu
+        });
+
+
+
+        // Funkcja wyświetlająca dodatkowe logo
+        function showExtraLogo() {
+            const extraLogoContainer = document.getElementById('extra-logo-container');
+            const logoImage = extraLogoContainer.querySelector('img');
+
+            // Wyświetlenie kontenera logo
+            extraLogoContainer.classList.remove('hidden');
+
+            // Dodanie klasy fade-in z opóźnieniem
+            setTimeout(() => {
+                logoImage.classList.add('show');
+            }, 4500); // Opóźnienie animacji fade-in
+        }
+        
+        // Pokazanie życzeń i fajerwerków
+        function showImageAndWishes() {
+            document.getElementById('image-container').classList.remove('hidden');
+            document.getElementById('image-container').classList.add('image-bounce');
+            const wishes = document.getElementById('wishes');
+            wishes.classList.remove('hidden');
+            document.getElementById('fireworks-container').classList.remove('hidden');
+
+            // Wyświetlenie logo po życzeniach
+            showExtraLogo();
+        }
+    </script>
+</body>
+</html>

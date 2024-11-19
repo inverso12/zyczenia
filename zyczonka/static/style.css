@@ -1,0 +1,195 @@
+/* Ogólne style */
+body {
+    font-family: "Book Antiqua", serif;
+    background-color: rgb(252, 248, 229); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
+}
+
+.code-container {
+    text-align: center;
+    padding: 20px;
+    width:90%;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Style strony głównej */
+.container {
+    background: #fffefa;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+}
+
+input[type="password"] {
+    padding: 10px;
+    margin: 10px 0;
+    width: 80%;
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #3b3530;
+    border-radius: 8px;
+    width: 100%; /* Pełna szerokość na małych ekranach */
+}
+
+.error {
+    color: rgb(189, 96, 84);
+}
+
+/* Styl animacji kodu */
+.code-container {
+    font-size: 14px;
+    width: 90%; /* Kontener zajmuje 90% szerokości */
+    max-width: 1200px; /* Maksymalna szerokość na dużych ekranach */
+    color: #abb2bf; /* Kolor tekstu */
+    background: #342e28; /* Kolor tła */
+    padding: 20px; /* Wewnętrzne odstępy */
+    border-radius: 8px; /* Zaokrąglone rogi */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Cień */
+    margin: auto; /* Wyśrodkowanie */
+    overflow-x: hidden; /* Wyłączenie poziomego paska przewijania */
+    overflow-y: auto; /* Włączenie przewijania w pionie */
+    text-align: left; /* Wyrównanie tekstu do lewej */
+    white-space: normal; /* Wymuszenie zawijania tekstu */
+    word-break: break-word; /* Zawijanie bardzo długich słów */
+    word-wrap: break-word; /* Zawijanie długich słów */
+    overflow-wrap: break-word; /* Nowoczesna wersja zawijania */    
+}
+
+
+h3 {
+    color: #fcf8e5;
+    font-size: 16px;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+/* Dodajemy styl fade-out do całego kontenera */
+.fade-out {
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Animacja fade-in dla życzeń linijka po linijce */
+#wishes {
+    text-align: center;
+    color: rgb(80, 72, 61); 
+    font-family: "Book Antiqua", serif;
+    font-size: 24px;
+    margin-top: 20px;
+    position: relative;
+    line-height: 1.2; 
+}
+
+.wish-line {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideIn 1s ease-out forwards;
+}
+
+.wish-line:last-child {
+    font-weight: bold;
+    font-size: 28px; 
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Styl obrazka */
+.glow-image {
+    width: 250px;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Animacja spadania i odbijania obrazka */
+@keyframes dropAndBounce {
+    0% {
+        transform: translateY(-100vh); /* Obrazek spada spoza ekranu */
+    }
+    70% {
+        transform: translateY(0vh); /* Odbicie w docelowej pozycji */
+    }
+    80% {
+        transform: translateY(-5vh); /* Delikatne odbicie nad docelową lokalizacją */
+    }
+    100% {
+        transform: translateY(0vh); /* Powrót do docelowej pozycji */
+    }
+    }
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.image-bounce {
+    animation: dropAndBounce 1.5s ease-in-out, pulse 1.5s infinite 1.5s;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    #wishes {
+        font-size: 18px;
+    }
+
+    .wish-line {
+        font-size: 16px;
+    }
+
+    .fade-in-image {
+        width: 120px;
+    }
+
+    .glow-image {
+        width: 250px;
+    }
+}
+
+/* Styl dla obrazka z fade-in */
+.fade-in-image {
+    opacity: 0;
+    transition: opacity 2s ease-in;
+    width: 150px; /* Rozmiar logo */
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
+.fade-in-image.show {
+    opacity: 1;
+}
